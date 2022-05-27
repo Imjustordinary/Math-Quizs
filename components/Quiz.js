@@ -10,9 +10,8 @@ import {
   Platform,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
-export default QuizPart = () => {
+export default QuizPart = (props) => {
   const [firstNum, setFirstNum] = useState();
   const [secNum, setSecNum] = useState();
   const [answer, setAnswer] = useState();
@@ -28,20 +27,41 @@ export default QuizPart = () => {
   const onSubmitHandler = () => {
     if (userAns.length < 1) {
       showAlert();
+      return
     }
     else if(!decimal){
         if (parseInt(userAns) == answer) {
             console.log("right");
+            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
+            console.log(quiz)
+            let id = Math.random().toString()
+            let result = 'right'
+            props.addAnsweredQuiz(id, quiz, result)
           } 
         else {
             console.log("wrong");
+            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
+            console.log(quiz)
+            let id = Math.random().toString()
+            let result = 'wrong'
+            props.addAnsweredQuiz(id, quiz, result)
           }
     }
     else{
         if (parseFloat(userAns) == answer) {
             console.log("right");
+            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
+            console.log(quiz)
+            let id = Math.random().toString()
+            let result = 'right'
+            props.addAnsweredQuiz(id, quiz, result)
           } else {
             console.log("wrong");
+            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
+            console.log(quiz)
+            let id = Math.random().toString()
+            let result = 'wrong'
+            props.addAnsweredQuiz(id, quiz, result)
           }
     }
     
@@ -57,7 +77,7 @@ export default QuizPart = () => {
     setFirstNum(firstOne);
     setSecNum(secOne);
 
-    let symIndex = 4;
+    let symIndex = Math.floor(Math.random() * 4 + 1);
     if (symIndex == 1) {
       setAnswer(firstOne + secOne);
       setSymbol("+");
@@ -100,7 +120,7 @@ export default QuizPart = () => {
   }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    
       <View style={styles.quizContainer}>
         <View>
           <Text style={styles.quizText}>
@@ -128,7 +148,7 @@ export default QuizPart = () => {
           </Pressable>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    
   );
 };
 
