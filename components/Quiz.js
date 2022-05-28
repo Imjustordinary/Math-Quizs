@@ -16,7 +16,7 @@ export default QuizPart = (props) => {
   const [secNum, setSecNum] = useState();
   const [answer, setAnswer] = useState();
   const [symbol, setSymbol] = useState();
-  const [decimal, setDecimal] = useState(false)
+  const [decimal, setDecimal] = useState(false);
 
   const [userAns, setUserAns] = useState("");
 
@@ -27,44 +27,45 @@ export default QuizPart = (props) => {
   const onSubmitHandler = () => {
     if (userAns.length < 1) {
       showAlert();
-      return
+      return;
+    } else if (!decimal) {
+      if (parseInt(userAns) == answer) {
+        let quiz = firstNum
+          .toString()
+          .concat(" ", symbol, " ", secNum, " ", "=", " ", answer);
+        let id = Math.random().toString();
+        let result = "right";
+        let no = props.answeredQuiz.length + 1;
+        props.addAnsweredQuiz(id, quiz, result, no);
+      } else {
+        let quiz = firstNum
+          .toString()
+          .concat(" ", symbol, " ", secNum, " ", "=", " ", answer);
+        let id = Math.random().toString();
+        let result = "wrong";
+        let no = props.answeredQuiz.length + 1;
+        props.addAnsweredQuiz(id, quiz, result, no);
+      }
+    } else {
+      if (parseFloat(userAns) == answer) {
+        let quiz = firstNum
+          .toString()
+          .concat(" ", symbol, " ", secNum, " ", "=", " ", answer);
+        let id = Math.random().toString();
+        let result = "right";
+        let no = props.answeredQuiz.length + 1;
+        props.addAnsweredQuiz(id, quiz, result, no);
+      } else {
+        let quiz = firstNum
+          .toString()
+          .concat(" ", symbol, " ", secNum, " ", "=", " ", answer);
+        let id = Math.random().toString();
+        let result = "wrong";
+        let no = props.answeredQuiz.length + 1;
+        props.addAnsweredQuiz(id, quiz, result, no);
+      }
     }
-    else if(!decimal){
-        if (parseInt(userAns) == answer) {
-            console.log("right");
-            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
-            console.log(quiz)
-            let id = Math.random().toString()
-            let result = 'right'
-            props.addAnsweredQuiz(id, quiz, result)
-          } 
-        else {
-            console.log("wrong");
-            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
-            console.log(quiz)
-            let id = Math.random().toString()
-            let result = 'wrong'
-            props.addAnsweredQuiz(id, quiz, result)
-          }
-    }
-    else{
-        if (parseFloat(userAns) == answer) {
-            console.log("right");
-            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
-            console.log(quiz)
-            let id = Math.random().toString()
-            let result = 'right'
-            props.addAnsweredQuiz(id, quiz, result)
-          } else {
-            console.log("wrong");
-            let quiz = firstNum.toString().concat(' ',symbol,' ',secNum,' ','=',' ',answer)
-            console.log(quiz)
-            let id = Math.random().toString()
-            let result = 'wrong'
-            props.addAnsweredQuiz(id, quiz, result)
-          }
-    }
-    
+
     generateQuiz();
     setUserAns("");
   };
@@ -88,16 +89,15 @@ export default QuizPart = (props) => {
       setAnswer(firstOne * secOne);
       setSymbol("x");
     } else if (symIndex == 4) {
-        let divisionAns
-        divisionAns = firstOne / secOne
-       if(Number.isInteger(divisionAns)){
-           setAnswer(divisionAns)
-           setDecimal(false)
-       }
-       else{
-           setAnswer(divisionAns.toFixed(2))
-           setDecimal(true)
-       }
+      let divisionAns;
+      divisionAns = firstOne / secOne;
+      if (Number.isInteger(divisionAns)) {
+        setAnswer(divisionAns);
+        setDecimal(false);
+      } else {
+        setAnswer(divisionAns.toFixed(2));
+        setDecimal(true);
+      }
       setSymbol("÷");
     }
   };
@@ -120,35 +120,33 @@ export default QuizPart = (props) => {
   }, []);
 
   return (
-    
-      <View style={styles.quizContainer}>
-        <View>
-          <Text style={styles.quizText}>
-            {firstNum} {symbol} {secNum} = ?
-          </Text>
-        </View>
-        <View>
-          <TextInput
-            maxLength={4}
-            keyboardType="number-pad"
-            autoCapitalize="none"
-            autoCorrect={false}
-            style={styles.quizInput}
-            onChangeText={changeHandler}
-            value={userAns}
-          />
-        </View>
-        <View style={styles.containerBut}>
-          <Pressable
-            style={styles.quizButton}
-            onPress={onSubmitHandler}
-            android_ripple={{ color: "#9BA3EB" }}
-          >
-            <Text style={styles.quizButText}>Submit</Text>
-          </Pressable>
-        </View>
+    <View style={styles.quizContainer}>
+      <View>
+        <Text style={styles.quizText}>
+          {firstNum} {symbol} {secNum} = ?
+        </Text>
       </View>
-    
+      <View>
+        <TextInput
+          maxLength={4}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          style={styles.quizInput}
+          onChangeText={changeHandler}
+          value={userAns}
+        />
+      </View>
+      <View style={styles.containerBut}>
+        <Pressable
+          style={styles.quizButton}
+          onPress={onSubmitHandler}
+          android_ripple={{ color: "#9BA3EB" }}
+        >
+          <Text style={styles.quizButText}>Submit</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
